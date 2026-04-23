@@ -237,7 +237,7 @@ function drawScoreArea(ctx: CanvasRenderingContext2D, state: GameState) {
   const digitW = 5 * scoreScale + 2;
   const scoreDigits = 5;
   const scoreBlock = scoreDigits * digitW;
-  const scoreY = 8;
+  const scoreY = 13;
 
   drawNumber(ctx, state.score, state.width - scoreBlock - 10, scoreY, scoreDigits, scoreScale);
 

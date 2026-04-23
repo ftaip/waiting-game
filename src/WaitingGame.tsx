@@ -86,6 +86,7 @@ export const WaitingGame: React.FC<WaitingGameProps> = ({
   // Visual feedback state (drives CSS overlay + transform)
   const [shakeOffset, setShakeOffset] = useState({ x: 0, y: 0 });
   const [flashAlpha, setFlashAlpha] = useState(0);
+  const [phase, setPhase] = useState<GameState['phase']>('idle');
 
   useEffect(() => {
     if (color === 'currentColor' && wrapperRef.current) {
@@ -201,6 +202,9 @@ export const WaitingGame: React.FC<WaitingGameProps> = ({
       onGameOver?.(nextState.score);
       saveHiScore(nextState.hiScore);
     }
+    if (nextState.phase !== prevPhaseRef.current) {
+      setPhase(nextState.phase);
+    }
     prevPhaseRef.current = nextState.phase;
 
     // ── Visual feedback ────────────────────────────────────
@@ -248,9 +252,8 @@ export const WaitingGame: React.FC<WaitingGameProps> = ({
     userSelect: 'none',
   };
 
-  const showIdlePrompt =
-    stateRef.current?.phase === 'idle' && !autoStart;
-  const showDeadPrompt = stateRef.current?.phase === 'dead';
+  const showIdlePrompt = phase === 'idle' && !autoStart;
+  const showDeadPrompt = phase === 'dead';
 
   return (
     <div
