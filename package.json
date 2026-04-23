@@ -57,6 +57,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/ftaip/waiting-game.git"
+  },
+  "homepage": "https://github.com/ftaip/waiting-game#readme",
+  "bugs": {
+    "url": "https://github.com/ftaip/waiting-game/issues"
   }
 }
