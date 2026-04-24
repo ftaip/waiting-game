@@ -1,5 +1,10 @@
 import { useEffect, useRef, useCallback } from 'react';
 
+/**
+ * requestAnimationFrame loop that auto-pauses when the tab is hidden and
+ * supplies a clamped (≤ 100ms) dt. Re-export of the original loop hook so
+ * games and the dispatcher share one implementation.
+ */
 export function useGameLoop(
   callback: (dt: number) => void,
   active: boolean,
@@ -30,7 +35,6 @@ export function useGameLoop(
     return () => cancelAnimationFrame(rafRef.current);
   }, [active, loop]);
 
-  // Pause on visibility change
   useEffect(() => {
     const onVisChange = () => {
       if (document.hidden) {

@@ -1,39 +1,43 @@
-import type { GameInput } from './engine';
+import type { RawInput } from './types';
 
+/**
+ * Generic single-button input source. Captures Space / Arrow Up / W and any
+ * pointer/touch as the "primary" action and exposes both held + edge state.
+ */
 export function createInputHandler(canvas: HTMLCanvasElement): {
-  getInput: () => GameInput;
+  getInput: () => RawInput;
   destroy: () => void;
 } {
-  let pulseHeld = false;
+  let held = false;
 
   const onKeyDown = (e: KeyboardEvent) => {
     if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
       e.preventDefault();
-      pulseHeld = true;
+      held = true;
     }
   };
 
   const onKeyUp = (e: KeyboardEvent) => {
     if (e.code === 'Space' || e.code === 'ArrowUp' || e.code === 'KeyW') {
-      pulseHeld = false;
+      held = false;
     }
   };
 
   const onPointerDown = (e: PointerEvent) => {
     e.preventDefault();
-    pulseHeld = true;
+    held = true;
   };
 
   const onPointerUp = () => {
-    pulseHeld = false;
+    held = false;
   };
 
   const onTouchStart = (e: TouchEvent) => {
-    if (e.touches.length > 0) pulseHeld = true;
+    if (e.touches.length > 0) held = true;
   };
 
   const onTouchEnd = () => {
-    pulseHeld = false;
+    held = false;
   };
 
   document.addEventListener('keydown', onKeyDown);
@@ -47,12 +51,10 @@ export function createInputHandler(canvas: HTMLCanvasElement): {
   let prevHeld = false;
 
   return {
-    getInput(): GameInput {
-      // Continuous "thrust" while held; also expose the leading edge for
-      // start/restart transitions.
-      const pulseEdge = pulseHeld && !prevHeld;
-      prevHeld = pulseHeld;
-      return { pulse: pulseHeld, pulseEdge };
+    getInput(): RawInput {
+      const primaryEdge = held && !prevHeld;
+      prevHeld = held;
+      return { primary: held, primaryEdge };
     },
     destroy() {
       document.removeEventListener('keydown', onKeyDown);
