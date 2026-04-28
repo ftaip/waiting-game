@@ -2,6 +2,8 @@
 
 A tiny **one-button mini-arcade** for filling the void while a long task runs (LLMs, builds, uploads, you name it). Every game is monocolor, pure 1-bit pixel art, single canvas, **zero runtime dependencies**, and shares the same combo / power-up / high-score / achievement framework.
 
+![react-waiting-game example](assets/example.gif)
+
 - Pick a game with a single prop: `<WaitingArcade game="runner" />`
 - One button: keyboard, pointer, and touch all map to the same primary action
 - Tints to any colour via the `color` prop (defaults to `currentColor`)

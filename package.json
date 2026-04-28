@@ -1,6 +1,6 @@
 {
   "name": "react-waiting-game",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Tiny one-button monocolor mini-arcade (jellyfish, pixel runner, gravity flip, invaders, rhythm tap) for filling LLM/loading waits in React",
   "license": "MIT",
   "type": "module",
